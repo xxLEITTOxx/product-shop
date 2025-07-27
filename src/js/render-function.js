@@ -35,7 +35,7 @@ export function renderModalProduct(product) {
         <p class="modal-product__shipping-information"><b>Shipping:</b> ${shippingInformation}</p>
         <p class="modal-product__return-policy"><b>Return Policy:</b> ${returnPolicy}</p>
       </div>
-    </div>
+    </div> `;
 
 
   const inCart = isProductInStorage(STORAGE_KEYS.CART, String(id));
