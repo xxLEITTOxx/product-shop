@@ -1,16 +1,18 @@
-import { activeFirstBtn } from './helpers.js';
-
+import { activeFirstBtn, showErrorToast } from './helpers.js';
 import {
   fetchCategories,
   requestProducts,
   requestProductById,
-} from './products-api';
+  searchProducts,
+  fetchProducts,
+} from './products-api.js';
 import {
   renderCategories,
   renderProducts,
   renderModalProduct,
-} from './render-function';
+} from './render-function.js';
 import { openModal } from './modal.js';
+import { refs } from './refs.js';
 
 let currentPage = 1;
 
@@ -24,68 +26,96 @@ export async function getCategories() {
   }
 }
 
-import { searchProducts } from './products-api.js';
-import { renderProductsWithPagination } from './render-function.js';
-import { showErrorToast } from './helpers.js';
-import { refs } from './refs.js';
-
 export async function handleSearchSubmit(event) {
   event.preventDefault();
 
   const query = refs.searchInput.value.trim();
 
   if (!query) {
-    showErrorToast('Enter product');
+    showErrorToast('Please enter a search term');
     return;
   }
 
-  refs.loader.classList.add('visible');
+  // Безопасная работа с loader - проверяем его наличие
+  if (refs.loader) {
+    refs.loader.classList.add('visible');
+  }
 
   try {
     const products = await searchProducts(query);
-    refs.loader.classList.remove('visible');
+
+    // Убираем loader если он существует
+    if (refs.loader) {
+      refs.loader.classList.remove('visible');
+    }
+
     refs.productsList.innerHTML = '';
 
     if (products.length === 0) {
-      refs.notFound.classList.add('not-found--visible');
+      if (refs.notFound) {
+        refs.notFound.classList.add('not-found--visible');
+      }
       return;
     }
 
-    refs.notFound.classList.remove('not-found--visible');
-    renderProductsWithPagination(products, 12);
-    refs.clearSearchBtn.classList.add('visible');
+    if (refs.notFound) {
+      refs.notFound.classList.remove('not-found--visible');
+    }
+    renderProducts(products);
+
+    if (refs.clearSearchBtn) {
+      refs.clearSearchBtn.classList.add('visible');
+    }
   } catch (error) {
-    refs.loader.classList.remove('visible');
-    showErrorToast('Error');
+    if (refs.loader) {
+      refs.loader.classList.remove('visible');
+    }
+    showErrorToast('Search failed. Please try again.');
     console.error(error);
   }
 }
-
-import { fetchProducts } from './products-api.js';
 
 export async function handleClearSearch() {
   refs.searchInput.value = '';
-  refs.clearSearchBtn.classList.remove('visible');
-  refs.notFound.classList.remove('not-found--visible');
-  refs.loader.classList.add('visible');
+
+  if (refs.clearSearchBtn) {
+    refs.clearSearchBtn.classList.remove('visible');
+  }
+
+  if (refs.notFound) {
+    refs.notFound.classList.remove('not-found--visible');
+  }
+
+  if (refs.loader) {
+    refs.loader.classList.add('visible');
+  }
 
   try {
     const products = await fetchProducts();
-    refs.loader.classList.remove('visible');
+
+    if (refs.loader) {
+      refs.loader.classList.remove('visible');
+    }
+
     refs.productsList.innerHTML = '';
 
     if (products.length === 0) {
-      refs.notFound.classList.add('not-found--visible');
+      if (refs.notFound) {
+        refs.notFound.classList.add('not-found--visible');
+      }
       return;
     }
 
-    renderProductsWithPagination(products, 12);
+    renderProducts(products);
   } catch (error) {
-    refs.loader.classList.remove('visible');
-    showErrorToast('Error load');
+    if (refs.loader) {
+      refs.loader.classList.remove('visible');
+    }
+    showErrorToast('Failed to load products');
     console.error(error);
   }
 }
+
 export async function onProductClick(event) {
   const productCard = event.target.closest('.products__item');
 
