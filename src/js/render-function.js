@@ -1,4 +1,6 @@
 import { refs } from './refs';
+import { isProductInStorage } from './helpers';
+import { STORAGE_KEYS } from './constants';
 
 export function renderCategories(data) {
   const markup = data
@@ -34,11 +36,20 @@ export function renderModalProduct(product) {
         <p class="modal-product__return-policy"><b>Return Policy:</b> ${returnPolicy}</p>
       </div>
     </div>
-  `;
+
+
+  const inCart = isProductInStorage(STORAGE_KEYS.CART, String(id));
+  const inWishlist = isProductInStorage(STORAGE_KEYS.WISHLIST, String(id));
+
+  const cartBtnText = inCart ? 'Remove from Cart' : 'Add to Cart';
+  const wishlistBtnText = inWishlist
+    ? 'Remove from Wishlist'
+    : 'Add to Wishlist';
+
 
   const actionsMarkup = `
-    <button class="modal-product__btn modal-product__btn--cart" data-id="${id}">Add to cart</button>
-    <button class="modal-product__btn modal-product__btn--wishlist" data-id="${id}">Add to wishlist</button>
+    <button class="modal-product__btn modal-product__btn--cart" data-id="${id}">${cartBtnText}</button>
+    <button class="modal-product__btn modal-product__btn--wishlist" data-id="${id}">${wishlistBtnText}</button>
   `;
 
   refs.modalProduct.innerHTML = productInfoMarkup;
@@ -60,4 +71,10 @@ export function productsMarkup(product) {
 export function renderProducts(productArray) {
   const markup = productArray.map(productsMarkup).join('');
   refs.productsList.innerHTML = markup; // ✅ виправлено
+}
+
+export function clearProducts() {
+  if (refs.productList) {
+    refs.productList.innerHTML = '';
+  }
 }
