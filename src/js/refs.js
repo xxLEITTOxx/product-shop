@@ -5,7 +5,9 @@ export const refs = {
   clearSearchBtn: document.querySelector('.search-form__btn-clear'),
   loader: document.querySelector('.loader'),
   productsList: document.querySelector('.products'),
-  notFound: document.querySelector('.not-found'),
+  get notFound() {
+    return document.querySelector('.not-found');
+  },
   pagination: document.querySelector('.pagination'),
 
   // --- Модальне окно ---
@@ -14,4 +16,5 @@ export const refs = {
   modalCloseBtn: document.querySelector('.modal__close-btn'),
   modalActions: document.querySelector('.modal-product__actions'),
   productList: document.querySelector('.products'),
+  themeToggleBtn: document.querySelector('.theme-toggle-btn'),
 };

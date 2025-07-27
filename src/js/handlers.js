@@ -1,7 +1,5 @@
 import { activeFirstBtn } from './helpers.js';
-import { fetchCategories } from './products-api';
-import { renderCategories } from './render-function.js';
-import { activeFirstBtn } from './helpers';
+
 import {
   fetchCategories,
   requestProducts,

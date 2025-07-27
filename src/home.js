@@ -6,6 +6,7 @@ import {
   handleClearSearch,
 } from './js/handlers';
 import { refs } from './js/refs';
+import './js/theme-toggle';
 
 //Логіка сторінки Home
 getCategories();
