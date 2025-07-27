@@ -7,3 +7,9 @@ export const ENDPOINTS = {
   SEARCH: 'products/search',
   PRODUCTS_BY_CATEGORY: 'products/category/',
 };
+
+export const STORAGE_KEYS = {
+  CART: 'cart',
+  WISHLIST: 'wishlist',
+  THEME: 'theme',
+};
