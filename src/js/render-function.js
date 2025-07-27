@@ -12,6 +12,24 @@ export function renderCategories(data) {
   refs.categoryList.innerHTML = markup;
 }
 
+export function renderModalProduct(product) {
+  const productInfoMarkup = `
+    <img class="modal-product__image" src="${product.thumbnail}" alt="${product.title}" />
+    <div class="modal-product__info">
+        <h2 class="modal-product__title">${product.title}</h2>
+        <p class="modal-product__desc">${product.description}</p>
+        <p><strong>Rating:</strong> ${product.rating} / 5</p>
+        <p class="modal-product__price">Price: $${product.price}</p>
+    </div>
+  `;
+  const actionsMarkup = `
+    <button class="modal-product__btn" data-id="${product.id}">Add to cart</button>
+    <button class="modal-product__btn" data-id="${product.id}">Add to wishlist</button>
+  `;
+  refs.modalProduct.innerHTML = productInfoMarkup;
+  refs.modalActions.innerHTML = actionsMarkup;
+}
+
 export function productsMarkup(product) {
   return `
     <li class="products__item" data-id="${product.id}">
