@@ -8,10 +8,8 @@ import {
   removeFromStorage,
   removeActiveBtn,
 } from './helpers';
-
+import { refs } from './refs';
 import { STORAGE_KEYS } from './constants';
-
-
 import {
   fetchByCategory,
   requestProducts,
@@ -26,12 +24,6 @@ import {
   renderProducts,
   renderModalProduct,
 } from './render-function';
-
-import { refs } from './refs';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
-import { STORAGE_KEYS } from './constants';
-
 
 import { openModal } from './modal.js';
 import { refs } from './refs.js';
