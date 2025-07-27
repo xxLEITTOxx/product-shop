@@ -26,7 +26,6 @@ import {
 } from './render-function';
 
 import { openModal } from './modal.js';
-import { refs } from './refs.js';
 
 let currentPage = 1;
 
