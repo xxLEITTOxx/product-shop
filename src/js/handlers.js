@@ -1,10 +1,6 @@
-
-
-
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import {
-  activeFirstBtn, 
+import {  
   showErrorToast,
   activeFirstBtn,
   addToStorage,
