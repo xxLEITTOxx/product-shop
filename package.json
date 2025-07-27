@@ -1,11 +1,11 @@
 {
-  "name": "blended_products",
+  "name": "product-shop",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/blended_products/",
+    "build": "vite build --base=/product-shop/",
     "preview": "vite preview"
   },
   "devDependencies": {
