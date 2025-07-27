@@ -1,0 +1,4 @@
+import"./assets/styles-JE8YjOlG.js";import{a as o}from"./assets/vendor-N5iQpiFS.js";function c(){const t=document.querySelector(".categories__btn");t&&t.classList.add("categories__btn--active")}const r="https://dummyjson.com/",a={CATEGORIES:"products/category-list",PRODUCTS:"products",PRODUCT_BY_ID:"products/",SEARCH:"products/search",PRODUCTS_BY_CATEGORY:"products/category/"};o.defaults.baseURL=r;async function n(){const{data:t}=await o(`${a.CATEGORIES}`);return t}const i={categoryList:document.querySelector(".categories")};function u(t){const e=t.map(s=>`<li class="categories__item">
+   <button class="categories__btn" type="button">${s}</button>
+ </li>`).join("");i.categoryList.innerHTML=e}async function d(){try{const t=await n();u(["All",...t]),c()}catch(t){console.log(t)}}d();
+//# sourceMappingURL=index.js.map
