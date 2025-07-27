@@ -1,4 +1,7 @@
-import {
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+import {  
+  showErrorToast,
   activeFirstBtn,
   addToStorage,
   isProductInStorage,
@@ -6,12 +9,17 @@ import {
   removeActiveBtn,
 } from './helpers';
 
+import { STORAGE_KEYS } from './constants';
+
+
 import {
   fetchByCategory,
   requestProducts,
   fetchCategories,
   requestProductById,
-} from './products-api';
+  searchProducts,
+  fetchProducts,
+} from './products-api.js';
 
 import {
   renderCategories,
@@ -24,7 +32,9 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { STORAGE_KEYS } from './constants';
 
+
 import { openModal } from './modal.js';
+import { refs } from './refs.js';
 
 let currentPage = 1;
 
@@ -48,6 +58,96 @@ export async function getOneCategories(product) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function handleSearchSubmit(event) {
+  event.preventDefault();
+
+  const query = refs.searchInput.value.trim();
+
+  if (!query) {
+    showErrorToast('Please enter a search term');
+    return;
+  }
+
+  // Безопасная работа с loader - проверяем его наличие
+  if (refs.loader) {
+    refs.loader.classList.add('visible');
+  }
+
+  try {
+    const products = await searchProducts(query);
+
+    // Убираем loader если он существует
+    if (refs.loader) {
+      refs.loader.classList.remove('visible');
+    }
+
+    refs.productsList.innerHTML = '';
+
+    if (products.length === 0) {
+      if (refs.notFound) {
+        refs.notFound.classList.add('not-found--visible');
+      }
+      return;
+    }
+
+    if (refs.notFound) {
+      refs.notFound.classList.remove('not-found--visible');
+    }
+    renderProducts(products);
+
+    if (refs.clearSearchBtn) {
+      refs.clearSearchBtn.classList.add('visible');
+    }
+  } catch (error) {
+    if (refs.loader) {
+      refs.loader.classList.remove('visible');
+    }
+    showErrorToast('Search failed. Please try again.');
+    console.error(error);
+  }
+}
+
+export async function handleClearSearch() {
+    refs.searchInput.value = '';
+
+    if (refs.clearSearchBtn) {
+        refs.clearSearchBtn.classList.remove('visible');
+    }
+
+    if (refs.notFound) {
+        refs.notFound.classList.remove('not-found--visible');
+    }
+
+    if (refs.loader) {
+        refs.loader.classList.add('visible');
+    }
+
+    try {
+        const products = await fetchProducts();
+
+        if (refs.loader) {
+            refs.loader.classList.remove('visible');
+        }
+
+        refs.productsList.innerHTML = '';
+
+        if (products.length === 0) {
+            if (refs.notFound) {
+                refs.notFound.classList.add('not-found--visible');
+            }
+            return;
+        }
+
+        renderProducts(products);
+    } catch (error) {
+        if (refs.loader) {
+            refs.loader.classList.remove('visible');
+        }
+        showErrorToast('Failed to load products');
+        console.error(error);
+    }
 }
 
 export function onModalActionsClick(event) {
@@ -80,6 +180,7 @@ export function onModalActionsClick(event) {
       position: 'topRight',
       timeout: 1000,
     });
+
   }
 }
 

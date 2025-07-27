@@ -4,6 +4,15 @@ export const refs = {
   categoryItem: document.querySelector('.categories__item'),
   productList: document.querySelector('.products'),
   notFoundModal: document.querySelector('div.not-found'),
+  searchForm: document.querySelector('.search-form'),
+  searchInput: document.querySelector('.search-form__input'),
+  clearSearchBtn: document.querySelector('.search-form__btn-clear'),
+  loader: document.querySelector('.loader'),
+  productsList: document.querySelector('.products'),
+  get notFound() {
+    return document.querySelector('.not-found');
+  },
+  pagination: document.querySelector('.pagination'),
 
   // --- Модальне окно ---
   modal: document.querySelector('.modal'),

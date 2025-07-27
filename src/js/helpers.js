@@ -1,5 +1,7 @@
 import { refs } from './refs';
 import { STORAGE_KEYS } from './constants';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 export function activeFirstBtn() {
   const firstBtn = document.querySelector('.categories__btn');
@@ -9,9 +11,17 @@ export function activeFirstBtn() {
 }
 
 export function removeActiveBtn() {
-  const activeBtn = document.querySelector('.categories__btn--active');
+    const activeBtn = document.querySelector('.categories__btn--active');
+    activeBtn.classList.remove('categories__btn--active');
+}
 
-  activeBtn.classList.remove('categories__btn--active');
+export function showErrorToast(message) {
+  iziToast.error({
+    title: 'Error',
+    message: message,
+    position: 'topRight',
+    timeout: 1000,
+  });
 }
 
 export const saveToStorage = (key, value) => {
@@ -70,3 +80,4 @@ export const updateCounters = () => {
     refs.wishlistCount.textContent = wishlist.length;
   }
 };
+
