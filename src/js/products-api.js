@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { BASE_URL, ENDPOINTS } from './constants';
-import { refs } from './refs';
 
 axios.defaults.baseURL = BASE_URL;
 
@@ -15,4 +14,9 @@ export async function requestProducts(currentPage) {
   const data = await axios(myUrl);
 
   return data.data.products;
+}
+
+export async function requestProductById(id) {
+  const { data } = await axios(`${ENDPOINTS.PRODUCT_BY_ID}${id}`);
+  return data;
 }

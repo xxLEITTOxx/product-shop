@@ -1,5 +1,10 @@
-import { getCategories, getProducts } from './js/handlers';
+import { getCategories, getProducts, onProductClick } from './js/handlers';
+import { refs } from './js/refs';
 
 //Логіка сторінки Home
 getCategories();
 getProducts();
+
+if (refs.productList) {
+  refs.productList.addEventListener('click', onProductClick);
+}

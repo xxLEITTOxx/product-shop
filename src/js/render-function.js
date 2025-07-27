@@ -12,6 +12,37 @@ export function renderCategories(data) {
   refs.categoryList.innerHTML = markup;
 }
 
+export function renderModalProduct(product) {
+  const {
+    id,
+    thumbnail,
+    title,
+    price,
+    description,
+    shippingInformation = 'Not specified',
+    returnPolicy = 'Not specified',
+  } = product;
+
+  const productInfoMarkup = `
+    <img class="modal-product__img" src="${thumbnail}" alt="${title}" />
+      <div class="modal-product__content">
+        <h2 class="modal-product__title">${title}</h2>
+        <div class="modal-product__details">
+            <p class="modal-product__price">Price: $${price}</p>
+            <p class="modal-product__description">${description}</p>
+            <p class="modal-product__shipping-information"><b>Shipping:</b> ${shippingInformation}</p>
+            <p class="modal-product__return-policy"><b>Return Policy:</b> ${returnPolicy}</p>
+        </div>
+      </div>
+  `;
+  const actionsMarkup = `
+    <button class="modal-product__btn modal-product__btn--cart" data-id="${id}">Add to cart</button>
+    <button class="modal-product__btn modal-product__btn--wishlist" data-id="${id}">Add to wishlist</button>
+  `;
+  refs.modalProduct.innerHTML = productInfoMarkup;
+  refs.modalActions.innerHTML = actionsMarkup;
+}
+
 export function productsMarkup(product) {
   return `
     <li class="products__item" data-id="${product.id}">
