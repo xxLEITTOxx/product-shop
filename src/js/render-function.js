@@ -11,3 +11,7 @@ export function renderCategories(data) {
 
   refs.categoryList.innerHTML = markup;
 }
+
+// export function renderOneCategory(data) {
+//   const markup = data.map(el => ``)
+// }
