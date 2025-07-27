@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 import { activeFirstBtn } from './helpers.js';
 import { fetchCategories } from './products-api';
 import { renderCategories } from './render-function.js';
-=======
 import { activeFirstBtn } from './helpers';
 import {
   fetchCategories,
@@ -17,7 +15,6 @@ import {
 import { openModal } from './modal.js';
 
 let currentPage = 1;
->>>>>>> origin/main
 
 export async function getCategories() {
   try {
@@ -29,7 +26,6 @@ export async function getCategories() {
   }
 }
 
-<<<<<<< HEAD
 import { searchProducts } from './products-api.js';
 import { renderProductsWithPagination } from './render-function.js';
 import { showErrorToast } from './helpers.js';
@@ -90,7 +86,8 @@ export async function handleClearSearch() {
     refs.loader.classList.remove('visible');
     showErrorToast('Error load');
     console.error(error);
-=======
+  }
+}
 export async function onProductClick(event) {
   const productCard = event.target.closest('.products__item');
 
@@ -115,6 +112,5 @@ export async function getProducts() {
     renderProducts(data);
   } catch (error) {
     console.log(error);
->>>>>>> origin/main
   }
 }
