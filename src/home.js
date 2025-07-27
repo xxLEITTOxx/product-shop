@@ -1,12 +1,12 @@
-import { getCategories, getOneCategories } from './js/handlers';
+import {
+  getCategories,
+  getProducts,
+  getOneCategoryProduct,
+} from './js/handlers';
 import { refs } from './js/refs';
 
 //Логіка сторінки Home
 getCategories();
+getProducts();
 
-refs.categoryList.addEventListener('click', e => {
-  const productName = e.target.elements;
-  console.log(productName);
-  getOneCategories(productName);
-  //   renderOneCategory();
-});
+refs.categoryList.addEventListener('click', getOneCategoryProduct);

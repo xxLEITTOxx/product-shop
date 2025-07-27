@@ -4,3 +4,9 @@ export function activeFirstBtn() {
     firstBtn.classList.add('categories__btn--active');
   }
 }
+
+export function removeActiveBtn() {
+  const activeBtn = document.querySelector('.categories__btn--active');
+
+  activeBtn.classList.remove('categories__btn--active');
+}
