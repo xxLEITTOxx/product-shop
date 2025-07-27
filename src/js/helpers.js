@@ -8,6 +8,19 @@ export function activeFirstBtn() {
   }
 }
 
+
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
+export function showErrorToast(message) {
+  iziToast.error({
+    title: 'Error',
+    message: message,
+    position: 'topRight',
+    timeout: 1000,
+  });
+}
+
 export const saveToStorage = (key, value) => {
   try {
     const serializedState = JSON.stringify(value);
@@ -64,3 +77,4 @@ export const updateCounters = () => {
     refs.wishlistCount.textContent = wishlist.length;
   }
 };
+

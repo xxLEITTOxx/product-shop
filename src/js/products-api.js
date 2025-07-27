@@ -8,6 +8,18 @@ export async function fetchCategories() {
   return data;
 }
 
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
+export async function searchProducts(query) {
+  const { data } = await axios(`${ENDPOINTS.SEARCH}?q=${query}`);
+  return data.products;
+}
+
+export async function fetchProducts() {
+  const { data } = await axios(`${ENDPOINTS.PRODUCTS}`);
+  return data.products;
+}
 export async function requestProducts(currentPage) {
   const skip = (currentPage - 1) * 12;
   const myUrl = `${ENDPOINTS.PRODUCTS}?limit=12&skip=${skip}`;

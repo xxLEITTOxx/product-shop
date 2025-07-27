@@ -6,8 +6,8 @@ export function renderCategories(data) {
   const markup = data
     .map(
       el => `<li class="categories__item">
-   <button class="categories__btn" type="button">${el}</button>
- </li>`
+        <button class="categories__btn" type="button">${el}</button>
+      </li>`
     )
     .join('');
 
@@ -27,16 +27,16 @@ export function renderModalProduct(product) {
 
   const productInfoMarkup = `
     <img class="modal-product__img" src="${thumbnail}" alt="${title}" />
-      <div class="modal-product__content">
-        <h2 class="modal-product__title">${title}</h2>
-        <div class="modal-product__details">
-            <p class="modal-product__price">Price: $${price}</p>
-            <p class="modal-product__description">${description}</p>
-            <p class="modal-product__shipping-information"><b>Shipping:</b> ${shippingInformation}</p>
-            <p class="modal-product__return-policy"><b>Return Policy:</b> ${returnPolicy}</p>
-        </div>
+    <div class="modal-product__content">
+      <h2 class="modal-product__title">${title}</h2>
+      <div class="modal-product__details">
+        <p class="modal-product__price">Price: $${price}</p>
+        <p class="modal-product__description">${description}</p>
+        <p class="modal-product__shipping-information"><b>Shipping:</b> ${shippingInformation}</p>
+        <p class="modal-product__return-policy"><b>Return Policy:</b> ${returnPolicy}</p>
       </div>
-  `;
+    </div>
+
 
   const inCart = isProductInStorage(STORAGE_KEYS.CART, String(id));
   const inWishlist = isProductInStorage(STORAGE_KEYS.WISHLIST, String(id));
@@ -46,10 +46,12 @@ export function renderModalProduct(product) {
     ? 'Remove from Wishlist'
     : 'Add to Wishlist';
 
+
   const actionsMarkup = `
     <button class="modal-product__btn modal-product__btn--cart" data-id="${id}">${cartBtnText}</button>
     <button class="modal-product__btn modal-product__btn--wishlist" data-id="${id}">${wishlistBtnText}</button>
   `;
+
   refs.modalProduct.innerHTML = productInfoMarkup;
   refs.modalActions.innerHTML = actionsMarkup;
 }
@@ -66,9 +68,9 @@ export function productsMarkup(product) {
   `;
 }
 
-export function renderProducts(product) {
-  const markup = product.map(productsMarkup).join('');
-  refs.productList.innerHTML = markup;
+export function renderProducts(productArray) {
+  const markup = productArray.map(productsMarkup).join('');
+  refs.productsList.innerHTML = markup; // ✅ виправлено
 }
 
 export function clearProducts() {
