@@ -7,4 +7,5 @@ export const refs = {
   modalCloseBtn: document.querySelector('.modal__close-btn'),
   modalActions: document.querySelector('.modal-product__actions'),
   productList: document.querySelector('.products'),
+  themeToggleBtn: document.querySelector('.theme-toggle-btn'),
 };
