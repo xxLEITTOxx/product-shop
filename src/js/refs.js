@@ -8,4 +8,13 @@ export const refs = {
   modalActions: document.querySelector('.modal-product__actions'),
   productList: document.querySelector('.products'),
   themeToggleBtn: document.querySelector('.theme-toggle-btn'),
+
+  // --- Хедер Cart and Wishlist ---
+  wishlistCount: document.querySelector('[data-wishlist-count]'),
+  cartCount: document.querySelector('[data-cart-count]'),
+
+  // --- Сторінка Cart ---
+  cartTotalItems: document.querySelector('[data-count]'),
+  cartTotalPrice: document.querySelector('[data-price]'),
+  cartBuyBtn: document.querySelector('.cart-summary__btn'),
 };

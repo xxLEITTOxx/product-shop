@@ -1,4 +1,6 @@
 import { refs } from './refs';
+import { isProductInStorage } from './helpers';
+import { STORAGE_KEYS } from './constants';
 
 export function renderCategories(data) {
   const markup = data
@@ -35,9 +37,18 @@ export function renderModalProduct(product) {
         </div>
       </div>
   `;
+
+  const inCart = isProductInStorage(STORAGE_KEYS.CART, String(id));
+  const inWishlist = isProductInStorage(STORAGE_KEYS.WISHLIST, String(id));
+
+  const cartBtnText = inCart ? 'Remove from Cart' : 'Add to Cart';
+  const wishlistBtnText = inWishlist
+    ? 'Remove from Wishlist'
+    : 'Add to Wishlist';
+
   const actionsMarkup = `
-    <button class="modal-product__btn modal-product__btn--cart" data-id="${id}">Add to cart</button>
-    <button class="modal-product__btn modal-product__btn--wishlist" data-id="${id}">Add to wishlist</button>
+    <button class="modal-product__btn modal-product__btn--cart" data-id="${id}">${cartBtnText}</button>
+    <button class="modal-product__btn modal-product__btn--wishlist" data-id="${id}">${wishlistBtnText}</button>
   `;
   refs.modalProduct.innerHTML = productInfoMarkup;
   refs.modalActions.innerHTML = actionsMarkup;
@@ -58,4 +69,10 @@ export function productsMarkup(product) {
 export function renderProducts(product) {
   const markup = product.map(productsMarkup).join('');
   refs.productList.innerHTML = markup;
+}
+
+export function clearProducts() {
+  if (refs.productList) {
+    refs.productList.innerHTML = '';
+  }
 }
