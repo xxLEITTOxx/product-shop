@@ -90,43 +90,45 @@ export async function handleSearchSubmit(event) {
 }
 
 export async function handleClearSearch() {
-  refs.searchInput.value = '';
+    refs.searchInput.value = '';
 
-  if (refs.clearSearchBtn) {
-    refs.clearSearchBtn.classList.remove('visible');
-  }
+    if (refs.clearSearchBtn) {
+        refs.clearSearchBtn.classList.remove('visible');
+    }
 
-  if (refs.notFound) {
-    refs.notFound.classList.remove('not-found--visible');
-  }
-
-  if (refs.loader) {
-    refs.loader.classList.add('visible');
-  }
-
-  try {
-    const products = await fetchProducts();
+    if (refs.notFound) {
+        refs.notFound.classList.remove('not-found--visible');
+    }
 
     if (refs.loader) {
-      refs.loader.classList.remove('visible');
+        refs.loader.classList.add('visible');
     }
 
-    refs.productsList.innerHTML = '';
+    try {
+        const products = await fetchProducts();
 
-    if (products.length === 0) {
-      if (refs.notFound) {
-        refs.notFound.classList.add('not-found--visible');
-      }
-      return;
-    }
+        if (refs.loader) {
+            refs.loader.classList.remove('visible');
+        }
 
-    renderProducts(products);
-  } catch (error) {
-    if (refs.loader) {
-      refs.loader.classList.remove('visible');
+        refs.productsList.innerHTML = '';
+
+        if (products.length === 0) {
+            if (refs.notFound) {
+                refs.notFound.classList.add('not-found--visible');
+            }
+            return;
+        }
+
+        renderProducts(products);
+    } catch (error) {
+        if (refs.loader) {
+            refs.loader.classList.remove('visible');
+        }
+        showErrorToast('Failed to load products');
+        console.error(error);
     }
-    showErrorToast('Failed to load products');
-    console.error(error);
+}
 
 export function onModalActionsClick(event) {
   const button = event.target.closest('.modal-product__btn');
