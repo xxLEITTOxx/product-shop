@@ -11,8 +11,8 @@ export function activeFirstBtn() {
 }
 
 export function removeActiveBtn() {
-    const activeBtn = document.querySelector('.categories__btn--active');
-    activeBtn.classList.remove('categories__btn--active');
+  const activeBtn = document.querySelector('.categories__btn--active');
+  activeBtn.classList.remove('categories__btn--active');
 }
 
 export function showErrorToast(message) {
@@ -81,3 +81,10 @@ export const updateCounters = () => {
   }
 };
 
+export function showLoadMoreButton() {
+  refs.loadMoreBtn.classList.remove('is-hidden');
+}
+
+export function hideLoadMoreButton() {
+  refs.loadMoreBtn.classList.add('is-hidden');
+}

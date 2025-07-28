@@ -37,7 +37,6 @@ export function renderModalProduct(product) {
       </div>
     </div> `;
 
-
   const inCart = isProductInStorage(STORAGE_KEYS.CART, String(id));
   const inWishlist = isProductInStorage(STORAGE_KEYS.WISHLIST, String(id));
 
@@ -45,7 +44,6 @@ export function renderModalProduct(product) {
   const wishlistBtnText = inWishlist
     ? 'Remove from Wishlist'
     : 'Add to Wishlist';
-
 
   const actionsMarkup = `
     <button class="modal-product__btn modal-product__btn--cart" data-id="${id}">${cartBtnText}</button>
@@ -70,7 +68,9 @@ export function productsMarkup(product) {
 
 export function renderProducts(productArray) {
   const markup = productArray.map(productsMarkup).join('');
-  refs.productsList.innerHTML = markup; // ✅ виправлено
+
+  //refs.productsList.innerHTML = markup; // ✅ виправлено
+  refs.productList.insertAdjacentHTML('beforeend', markup);
 }
 
 export function clearProducts() {
