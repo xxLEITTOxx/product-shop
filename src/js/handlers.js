@@ -287,14 +287,14 @@ export async function onLoadMoreClick() {
 
 // Вспомогательная функция для определения типа загрузки
 async function loadMoreData(query, category, page) {
-  if (query) {
-    // If there is a search query, always search (ignores category)
+  // Проверяем, была ли выполнена операция поиска (видна ли кнопка очистки)
+  const isSearchActive = refs.clearSearchBtn?.classList.contains('visible');
+
+  if (query && isSearchActive) {
     return await searchProductsLoadMore(query, page);
   } else if (category === 'All') {
-    // No search, all products
     return await requestProducts(page);
   } else {
-    // No search, specific category
     return await requestProductsLoadMore(category, page);
   }
 }
