@@ -19,12 +19,15 @@ import {
   requestProductById,
   searchProducts,
   fetchProducts,
+  requestProductsLoadMore,
+  searchProductsLoadMore,
 } from './products-api.js';
 
 import {
   renderCategories,
   renderProducts,
   renderModalProduct,
+  renderProductsLoadMore,
 } from './render-function';
 
 import { openModal } from './modal.js';
@@ -45,8 +48,14 @@ export async function getOneCategories(product) {
   try {
     const data = await fetchByCategory(product);
     renderProducts(data.products);
+
     if (data.products.length === 0 && product !== 'All') {
       refs.notFoundModal.classList.add('not-found--visible');
+    }
+    if (data.total <= 12) {
+      hideLoadMoreButton();
+    } else {
+      showLoadMoreButton();
     }
   } catch (error) {
     console.log(error);
@@ -63,6 +72,9 @@ export async function handleSearchSubmit(event) {
     return;
   }
 
+  // Сбрасываем currentPage при поиске
+  currentPage = 1;
+
   // Безопасная работа с loader - проверяем его наличие
   if (refs.loader) {
     refs.loader.classList.add('visible');
@@ -70,6 +82,7 @@ export async function handleSearchSubmit(event) {
 
   try {
     const products = await searchProducts(query);
+    showLoadMoreButton();
 
     // Убираем loader если он существует
     if (refs.loader) {
@@ -88,7 +101,11 @@ export async function handleSearchSubmit(event) {
     if (refs.notFound) {
       refs.notFound.classList.remove('not-found--visible');
     }
-    renderProducts(products);
+    renderProducts(products.products);
+
+    if (products.total <= 12) {
+      hideLoadMoreButton();
+    }
 
     if (refs.clearSearchBtn) {
       refs.clearSearchBtn.classList.add('visible');
@@ -105,6 +122,9 @@ export async function handleSearchSubmit(event) {
 export async function handleClearSearch() {
   refs.searchInput.value = '';
 
+  // Сбрасываем currentPage при очистке поиска
+  currentPage = 1;
+
   if (refs.clearSearchBtn) {
     refs.clearSearchBtn.classList.remove('visible');
   }
@@ -119,6 +139,7 @@ export async function handleClearSearch() {
 
   try {
     const products = await fetchProducts();
+    showLoadMoreButton();
 
     if (refs.loader) {
       refs.loader.classList.remove('visible');
@@ -134,6 +155,9 @@ export async function handleClearSearch() {
     }
 
     renderProducts(products);
+    if (products.total <= 12) {
+      hideLoadMoreButton();
+    }
   } catch (error) {
     if (refs.loader) {
       refs.loader.classList.remove('visible');
@@ -195,6 +219,9 @@ export async function onProductClick(event) {
 }
 
 export async function getProducts() {
+  // Сбрасываем currentPage для категории "All"
+  currentPage = 1;
+
   try {
     const data = await requestProducts(currentPage);
     renderProducts(data);
@@ -205,13 +232,16 @@ export async function getProducts() {
 }
 
 export function getOneCategoryProduct(e) {
-  const productName = e.target.textContent;
+  let productName = e.target.textContent;
   const btnHasClass = e.target.classList.contains('categories__btn');
   if (!btnHasClass) {
     return;
   }
   removeActiveBtn();
   e.target.classList.add('categories__btn--active');
+
+  // Сбрасываем currentPage при смене категории
+  currentPage = 1;
 
   if (productName === 'All') {
     refs.notFoundModal.classList.remove('not-found--visible');
@@ -223,10 +253,43 @@ export function getOneCategoryProduct(e) {
 
 export async function onLoadMoreClick() {
   currentPage++;
+
+  const query = refs.searchInput.value.trim();
+  const activeButton = document.querySelector('.categories__btn--active');
+  const activeBtnValue = activeButton?.textContent || 'All';
+
   try {
-    const data = await requestProducts(currentPage);
-    renderProducts(data);
+    const data = await loadMoreData(query, activeBtnValue, currentPage);
+
+    const products = data.products || data;
+    renderProductsLoadMore(products);
+
+    updateLoadMoreButton(data, products);
   } catch (error) {
-    console.log(error);
+    console.error('Error loading more products:', error);
+    showErrorToast('Failed to load more products');
+  }
+}
+
+// Вспомогательная функция для определения типа загрузки
+async function loadMoreData(query, category, page) {
+  if (query) {
+    return await searchProductsLoadMore(query, page);
+  } else if (category === 'All') {
+    return await requestProducts(page);
+  } else {
+    return await requestProductsLoadMore(category, page);
+  }
+}
+
+// Вспомогательная функция для управления кнопкой Load More
+function updateLoadMoreButton(data, products) {
+  if (data.skip !== undefined && data.total !== undefined) {
+    const totalLoaded = data.skip + products.length;
+    if (totalLoaded >= data.total) {
+      hideLoadMoreButton();
+    } else {
+      showLoadMoreButton();
+    }
   }
 }
