@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BASE_URL, ENDPOINTS } from './constants';
+import { showLoader } from './helpers';
 
 axios.defaults.baseURL = BASE_URL;
 
@@ -9,6 +10,7 @@ export async function fetchCategories() {
 }
 
 export async function fetchByCategory(product) {
+  await showLoader();
   const { data } = await axios(
     `${ENDPOINTS.PRODUCTS_BY_CATEGORY}${product}?limit=12`
   );
@@ -17,6 +19,7 @@ export async function fetchByCategory(product) {
 
 export async function searchProducts(query) {
   const { data } = await axios(`${ENDPOINTS.SEARCH}?limit=12&q=${query}`);
+
   return data;
 }
 
@@ -34,6 +37,7 @@ export async function fetchProducts() {
 }
 
 export async function requestProducts(currentPage) {
+  await showLoader();
   const skip = (currentPage - 1) * 12;
   const myUrl = `${ENDPOINTS.PRODUCTS}?limit=12&skip=${skip}`;
   const data = await axios(myUrl);
@@ -42,6 +46,7 @@ export async function requestProducts(currentPage) {
 }
 
 export async function requestProductsLoadMore(product, currentPage) {
+  await showLoader();
   const skip = (currentPage - 1) * 12;
   const myUrl = `${ENDPOINTS.PRODUCTS_BY_CATEGORY}${product}?limit=12&skip=${skip}`;
   const data = await axios(myUrl);

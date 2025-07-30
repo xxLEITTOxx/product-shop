@@ -88,3 +88,11 @@ export function showLoadMoreButton() {
 export function hideLoadMoreButton() {
   refs.loadMoreBtn.classList.add('is-hidden');
 }
+
+export function showLoader() {
+  refs.loader.classList.remove('visuallyhidden');
+}
+
+export function hideLoader() {
+  refs.loader.classList.add('visuallyhidden');
+}
