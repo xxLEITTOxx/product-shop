@@ -13,6 +13,7 @@ export const refs = {
     return document.querySelector('.not-found');
   },
   pagination: document.querySelector('.pagination'),
+  scrollUpBtn: document.querySelector('.scroll-up'),
 
   // --- Модальне окно ---
   modal: document.querySelector('.modal'),

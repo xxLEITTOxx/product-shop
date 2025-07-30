@@ -3,7 +3,13 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { STORAGE_KEYS } from './js/constants.js';
 import { refs } from './js/refs.js';
-import { loadFromStorage, saveToStorage, updateCounters } from './js/helpers';
+import {
+  loadFromStorage,
+  saveToStorage,
+  updateCounters,
+  handleScroll,
+  scrollToTop,
+} from './js/helpers';
 import { onModalActionsClick, onProductClick } from './js/handlers';
 import { requestProductById } from './js/products-api.js';
 import { renderProducts, clearProducts } from './js/render-function.js';

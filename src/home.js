@@ -10,7 +10,7 @@ import {
 } from './js/handlers';
 import { refs } from './js/refs';
 import './js/theme-toggle';
-import { updateCounters } from './js/helpers';
+import { updateCounters, handleScroll, scrollToTop } from './js/helpers';
 
 // handleClearSearch();
 
@@ -31,3 +31,8 @@ if (refs.modalActions) {
   refs.modalActions.addEventListener('click', onModalActionsClick);
 }
 refs.loadMoreBtn.addEventListener('click', onLoadMoreClick);
+
+if (refs.scrollUpBtn) {
+  window.addEventListener('scroll', handleScroll);
+  refs.scrollUpBtn.addEventListener('click', scrollToTop);
+}
