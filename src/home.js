@@ -12,6 +12,8 @@ import { refs } from './js/refs';
 import './js/theme-toggle';
 import { updateCounters, handleScroll, scrollToTop } from './js/helpers';
 
+// handleClearSearch();
+
 //Логіка сторінки Home
 updateCounters();
 getCategories();

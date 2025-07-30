@@ -9,6 +9,8 @@ import {
   removeActiveBtn,
   showLoadMoreButton,
   hideLoadMoreButton,
+  showLoader,
+  hideLoader,
 } from './helpers';
 import { refs } from './refs';
 import { STORAGE_KEYS } from './constants';
@@ -39,9 +41,13 @@ export async function getCategories() {
     const data = await fetchCategories();
     renderCategories(['All', ...data]);
     activeFirstBtn();
+    // showLoader();
   } catch (error) {
     console.log(error);
   }
+  // } finally {
+  //   hideLoader();
+  // }
 }
 
 export async function getOneCategories(product) {
@@ -59,6 +65,8 @@ export async function getOneCategories(product) {
     }
   } catch (error) {
     console.log(error);
+  } finally {
+    hideLoader();
   }
 }
 
@@ -82,6 +90,7 @@ export async function handleSearchSubmit(event) {
 
   try {
     const products = await searchProducts(query);
+    hideLoader();
     showLoadMoreButton();
 
     // Убираем loader если он существует
@@ -226,6 +235,8 @@ export async function getProducts() {
     const data = await requestProducts(currentPage);
     renderProducts(data);
     showLoadMoreButton();
+    // showLoader();
+    hideLoader();
   } catch (error) {
     console.log(error);
   }
@@ -268,6 +279,8 @@ export async function onLoadMoreClick() {
   } catch (error) {
     console.error('Error loading more products:', error);
     showErrorToast('Failed to load more products');
+  } finally {
+    hideLoader();
   }
 }
 

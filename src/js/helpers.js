@@ -104,4 +104,11 @@ export function scrollToTop() {
     top: 0,
     behavior: 'smooth',
   });
+
+export function showLoader() {
+  refs.loader.classList.remove('visuallyhidden');
+}
+
+export function hideLoader() {
+  refs.loader.classList.add('visuallyhidden');
 }
