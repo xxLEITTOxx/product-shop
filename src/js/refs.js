@@ -30,4 +30,5 @@ export const refs = {
   cartTotalItems: document.querySelector('[data-count]'),
   cartTotalPrice: document.querySelector('[data-price]'),
   cartBuyBtn: document.querySelector('.cart-summary__btn'),
+  loadMoreBtn: document.querySelector('.load-more-btn'),
 };

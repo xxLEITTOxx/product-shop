@@ -6,6 +6,7 @@ import {
   handleClearSearch,
   onModalActionsClick,
   getOneCategoryProduct,
+  onLoadMoreClick,
 } from './js/handlers';
 import { refs } from './js/refs';
 import './js/theme-toggle';
@@ -27,3 +28,4 @@ if (refs.productList) {
 if (refs.modalActions) {
   refs.modalActions.addEventListener('click', onModalActionsClick);
 }
+refs.loadMoreBtn.addEventListener('click', onLoadMoreClick);
