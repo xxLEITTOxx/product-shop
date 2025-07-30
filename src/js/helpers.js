@@ -88,3 +88,20 @@ export function showLoadMoreButton() {
 export function hideLoadMoreButton() {
   refs.loadMoreBtn.classList.add('is-hidden');
 }
+
+export function handleScroll() {
+  if (refs.scrollUpBtn) {
+    if (window.scrollY > 300) {
+      refs.scrollUpBtn.classList.add('show');
+    } else {
+      refs.scrollUpBtn.classList.remove('show');
+    }
+  }
+}
+
+export function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+}

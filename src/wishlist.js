@@ -2,7 +2,12 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import { STORAGE_KEYS } from './js/constants.js';
 import { refs } from './js/refs.js';
-import { loadFromStorage, updateCounters } from './js/helpers.js';
+import {
+  loadFromStorage,
+  updateCounters,
+  handleScroll,
+  scrollToTop,
+} from './js/helpers.js';
 import { onModalActionsClick, onProductClick } from './js/handlers.js';
 import { requestProductById } from './js/products-api.js';
 import { renderProducts, clearProducts } from './js/render-function.js';
@@ -59,6 +64,10 @@ function initializeWishlistPage() {
     refs.modalActions.addEventListener('click', onModalActionsClick);
   }
   document.addEventListener('storageUpdated', handleStorageUpdate);
+  if (refs.scrollUpBtn) {
+    window.addEventListener('scroll', handleScroll);
+    refs.scrollUpBtn.addEventListener('click', scrollToTop);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initializeWishlistPage);
