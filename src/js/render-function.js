@@ -69,6 +69,13 @@ export function productsMarkup(product) {
 export function renderProducts(productArray) {
   const markup = productArray.map(productsMarkup).join('');
 
+  refs.productsList.innerHTML = markup; // ✅ виправлено
+  // refs.productList.insertAdjacentHTML('beforeend', markup);
+}
+
+export function renderProductsLoadMore(productArray) {
+  const markup = productArray.map(productsMarkup).join('');
+
   //refs.productsList.innerHTML = markup; // ✅ виправлено
   refs.productList.insertAdjacentHTML('beforeend', markup);
 }
