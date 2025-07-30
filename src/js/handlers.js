@@ -253,6 +253,7 @@ export function getOneCategoryProduct(e) {
 
   // Сбрасываем currentPage при смене категории
   currentPage = 1;
+  refs.searchInput.value = '';
 
   if (productName === 'All') {
     refs.notFoundModal.classList.remove('not-found--visible');
@@ -287,10 +288,13 @@ export async function onLoadMoreClick() {
 // Вспомогательная функция для определения типа загрузки
 async function loadMoreData(query, category, page) {
   if (query) {
+    // If there is a search query, always search (ignores category)
     return await searchProductsLoadMore(query, page);
   } else if (category === 'All') {
+    // No search, all products
     return await requestProducts(page);
   } else {
+    // No search, specific category
     return await requestProductsLoadMore(category, page);
   }
 }
